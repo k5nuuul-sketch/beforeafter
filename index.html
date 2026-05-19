@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>before &amp; after</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #e63946;
+      --before-chevron: #0e1928;   /* ダーク・ネイビー */
+      --after-chevron:  #f0e6d2;   /* ウォームクリーム */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #070707;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 1.4rem 5rem;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.7em;
+      text-transform: uppercase;
+      color: #252525;
+      margin-bottom: 1.8rem;
+    }
+
+    /* タイトル: "before & after" 全部白 */
+    .hero-title {
+      font-size: clamp(4.5rem, 21vw, 15rem);
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 0.87;
+    }
+
+    .hero-title .amp {
+      font-size: 0.55em;
+      color: rgba(255,255,255,0.35);
+      display: block;
+      padding-left: 0.05em;
+      line-height: 1.3;
+    }
+
+    .hero-sub {
+      margin-top: 2.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: #222;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: #232323;
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+
+    .scroll-bar {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, #252525, transparent);
+      animation: sbar 2.2s ease-in-out infinite;
+    }
+
+    @keyframes sbar {
+      0%,100% { opacity:0; transform:scaleY(0); transform-origin:top; }
+      20%     { opacity:1; transform:scaleY(0); transform-origin:top; }
+      55%     { opacity:1; transform:scaleY(1); transform-origin:top; }
+      56%     { transform:scaleY(1); transform-origin:bottom; }
+      85%     { opacity:0; transform:scaleY(0); transform-origin:bottom; }
+    }
+
+    /* ─── PERSON SEP ─── */
+    .person-sep {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .person-sep-line {
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, #1c1c1c, transparent);
+    }
+
+    /* ─── BLOCK LABEL ─── */
+    .block-label {
+      font-size: clamp(3.5rem, 17vw, 12rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 0.85;
+      padding: 0.8rem 0.4rem 0.5rem;
+      display: flex;
+      align-items: flex-end;
+      gap: 0.15em;
+    }
+
+    .block-label .idx {
+      font-size: 0.27em;
+      letter-spacing: 0.08em;
+      font-weight: 400;
+      opacity: 0.45;
+      margin-bottom: 0.45em;
+    }
+
+    /* BEFOREラベル: 中抜き白 */
+    .before-label {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.5);
+    }
+    .before-label .idx {
+      color: rgba(255,255,255,0.25);
+      -webkit-text-stroke: 0;
+    }
+
+    /* AFTERラベル: ソリッド赤 */
+    .after-label {
+      color: var(--red);
+    }
+    .after-label .idx {
+      color: rgba(230,57,70,0.45);
+    }
+
+    /* ─── 画像 + ↓矢印ラッパー ─── */
+    .img-chevron-wrap {
+      position: relative;
+      overflow: hidden;
+      padding: 14vw 9% 0;
+    }
+
+    /* ↓ 向きの矢印 */
+    .img-chevron-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      clip-path: polygon(
+        0%   0%,
+        100% 0%,
+        100% 72%,
+        50%  100%,
+        0%   72%
+      );
+    }
+
+    /* BEFORE: 外側の三角コーナーをクリーム色に、矢印をもっと長く */
+    .before-wrap {
+      background: var(--after-chevron);   /* 矢印外側の三角をクリームで埋める */
+      padding-bottom: 32vw;               /* 矢印を長く伸ばす */
+    }
+
+    /* 矢印本体はダークネイビー */
+    .before-wrap::before { background: var(--before-chevron); }
+
+    /* AFTER全体ブロック（ラベル〜画像）をクリーム背景に */
+    .after-block {
+      background: var(--after-chevron);
+    }
+
+    /* after-wrap::before は親が背景を持つので不要 */
+    .after-wrap::before { background: transparent; clip-path: none; }
+
+    .after-wrap {
+      padding: 0 5% 6vw;   /* ラベルと画像の間に黒がでないよう上パディングなし */
+    }
+
+    /* ─── BEFORE IMAGE ─── */
+    .before-img {
+      position: relative;
+      z-index: 1;
+      /* 画像を少し小さくして矢印の上下・左右が見えるようにする */
+      width: 78%;
+      margin: 0 auto;
+      display: block;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      filter: brightness(0.68) saturate(0.6);
+      transition: filter 0.5s ease;
+    }
+
+    .before-img:hover { filter: brightness(0.8) saturate(0.8); }
+
+    /* ─── TRANSITION MARKER: 非表示 ─── */
+    .t-marker { display: none; }
+
+    .t-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, #111, rgba(230,57,70,0.3), #111);
+    }
+
+    .t-text {
+      padding: 0 1.1rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: rgba(230,57,70,0.5);
+    }
+
+    /* ─── AFTER MOSAIC ─── */
+    .mosaic {
+      display: grid;
+      gap: 3px;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .mosaic img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(1.05) saturate(1.1);
+    }
+
+    /* 01・03: メイン画像が左 */
+    .mosaic-std { grid-template-columns: 5fr 3fr; }
+
+    .mosaic-std img:nth-child(1) { grid-column:1; grid-row:1/4; height:100%; }
+    .mosaic-std img:nth-child(2) { grid-column:2; grid-row:1; aspect-ratio:3/4; }
+    .mosaic-std img:nth-child(3) { grid-column:2; grid-row:2; aspect-ratio:3/4; }
+    .mosaic-std img:nth-child(4) { grid-column:2; grid-row:3; aspect-ratio:3/4; }
+    /* 5fr列 と 3fr列 で同じ高さになるよう aspect-ratio を逆算
+       height = width*(4/ratio_num) → 5*(4/5) = 4 = 3*(4/3) = 4 で一致 */
+    .mosaic-std img:nth-child(5) {
+      grid-column: 1; grid-row: 4;
+      aspect-ratio: 5/4;
+      object-position: bottom;   /* 上部をクロップ・下端を揃える */
+    }
+    .mosaic-std img:nth-child(6) {
+      grid-column: 2; grid-row: 4;
+      aspect-ratio: 3/4;
+    }
+
+    /* 02: メイン画像が右 (反転) */
+    .mosaic-rev { grid-template-columns: 3fr 5fr; }
+
+    .mosaic-rev img:nth-child(1) { grid-column:2; grid-row:1/4; height:100%; }
+    .mosaic-rev img:nth-child(2) { grid-column:1; grid-row:1; aspect-ratio:3/4; }
+    .mosaic-rev img:nth-child(3) { grid-column:1; grid-row:2; aspect-ratio:3/4; }
+    .mosaic-rev img:nth-child(4) { grid-column:1; grid-row:3; aspect-ratio:3/4; }
+
+    /* ─── SCROLL ANIMATION ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(55px);
+      transition: opacity 0.95s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.95s cubic-bezier(0.4,0,0.2,1);
+    }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.22s; }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      padding: 5rem 1.4rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      text-align: center;
+    }
+
+    /* ─── PC: 中央寄せ・縮小 ─── */
+    @media (min-width: 768px) {
+      /* body を flex 列にして中央寄せ */
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* 全ての直接子要素を最大幅 480px に収める */
+      body > * {
+        width: 100%;
+        max-width: 480px;
+      }
+
+      /* vw ベースのサイズを PC 向けに上限設定 */
+      .hero-title   { font-size: clamp(3rem,   8vw, 5.5rem); }
+      .block-label  { font-size: clamp(2.5rem, 7vw, 4.5rem); }
+
+      .img-chevron-wrap          { padding-top: clamp(30px, 6vw, 60px); }
+      .before-wrap               { padding-bottom: clamp(55px, 13vw, 130px); }
+      .after-wrap                { padding: 0 5% clamp(20px, 4vw, 40px); }
+
+      /* 背景装飾の BA 文字は PC では非表示 */
+      .hero::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <p class="hero-eyebrow fade-up">transformation gallery</p>
+    <h1 class="hero-title fade-up d1">
+      before<span class="amp">&</span>after
+    </h1>
+    <p class="hero-sub fade-up d2">scroll to explore</p>
+    <div class="scroll-hint">
+      <span>scroll</span>
+      <div class="scroll-bar"></div>
+    </div>
+  </section>
+
+  <!-- ════════════════ 01 ════════════════ -->
+  <div class="person-sep"><div class="person-sep-line"></div></div>
+
+  <!-- BEFOREラベルだけ先に浮き上がる -->
+  <div class="fade-up">
+    <div class="block-label before-label">BEFORE<span class="idx">01</span></div>
+  </div>
+
+  <!-- 矢印・クリームコーナー・AFTERをひとまとめで同タイミングに浮き上がる -->
+  <div class="fade-up d1">
+    <div class="img-chevron-wrap before-wrap">
+      <img class="before-img" src="images/before1/IMG_1873.JPG" alt="Before 1">
+    </div>
+    <div class="after-block">
+      <div class="block-label after-label">AFTER<span class="idx">01</span></div>
+      <div class="img-chevron-wrap after-wrap">
+        <div class="mosaic mosaic-std fade-up d2">
+          <img src="images/after1/IMG_1977.JPG" alt="">
+          <img src="images/after1/IMG_1116_Original.JPG" alt="">
+          <img src="images/after1/IMG_0031.JPG" alt="">
+          <img src="images/after1/IMG_0740.JPG" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ 02 ════════════════ -->
+  <div class="person-sep"><div class="person-sep-line"></div></div>
+
+  <div class="fade-up">
+    <div class="block-label before-label">BEFORE<span class="idx">02</span></div>
+  </div>
+
+  <div class="fade-up d1">
+    <div class="img-chevron-wrap before-wrap">
+      <img class="before-img" src="images/before2/IMG_1870.JPG" alt="Before 2">
+    </div>
+    <div class="after-block">
+      <div class="block-label after-label">AFTER<span class="idx">02</span></div>
+      <div class="img-chevron-wrap after-wrap">
+        <div class="mosaic mosaic-rev fade-up d2">
+          <img src="images/after2/IMG_2659.JPG" alt="">
+          <img src="images/after2/IMG_2658.jpg" alt="">
+          <img src="images/after2/IMG_4085.JPG" alt="">
+          <img src="images/after2/IMG_4095.JPG" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ 03 ════════════════ -->
+  <div class="person-sep"><div class="person-sep-line"></div></div>
+
+  <div class="fade-up">
+    <div class="block-label before-label">BEFORE<span class="idx">03</span></div>
+  </div>
+
+  <div class="fade-up d1">
+    <div class="img-chevron-wrap before-wrap">
+      <img class="before-img" src="images/before3/IMG_1872.JPG" alt="Before 3">
+    </div>
+    <div class="after-block">
+      <div class="block-label after-label">AFTER<span class="idx">03</span></div>
+      <div class="img-chevron-wrap after-wrap">
+        <div class="mosaic mosaic-std fade-up d2">
+          <img src="images/after3/IMG_2654.JPG" alt="">
+          <img src="images/after3/IMG_2651.JPG" alt="">
+          <img src="images/after3/IMG_2653.JPG" alt="">
+          <img src="images/after3/IMG_2652.JPG" alt="">
+          <img src="images/after3/IMG_4096.JPG" alt="">
+          <img src="images/after3/IMG_1432.JPG" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person-sep"><div class="person-sep-line"></div></div>
+  <footer class="footer">before &amp; after</footer>
+
+  <script>
+    // ヒーロー即時表示
+    document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 200 + i * 150);
+    });
+
+    // スクロールアニメーション
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.07 });
+
+    document.querySelectorAll('.fade-up').forEach(el => {
+      if (!el.closest('.hero')) io.observe(el);
+    });
+  </script>
+
+</body>
+</html>

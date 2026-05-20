@@ -54,7 +54,7 @@
 
     .loader-track {
       width: min(240px, 60vw);
-      height: 1px;
+      height: 2px;
       background: #1c1c1c;
       overflow: hidden;
     }
@@ -66,11 +66,32 @@
       transition: width 0.25s ease;
     }
 
+    .loader-bottom {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .loader-spinner {
+      width: 15px;
+      height: 15px;
+      border: 1.5px solid #2a2a2a;
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     .loader-pct {
-      font-size: 0.58rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: #333;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: rgba(255, 255, 255, 0.75);
+      font-variant-numeric: tabular-nums;
     }
 
     /* ─── HERO ─── */
@@ -355,7 +376,10 @@
   <div id="loader">
     <div class="loader-title">before<span class="loader-amp">&</span>after</div>
     <div class="loader-track"><div class="loader-fill" id="loader-fill"></div></div>
-    <div class="loader-pct" id="loader-pct">0%</div>
+    <div class="loader-bottom">
+      <div class="loader-spinner"></div>
+      <div class="loader-pct" id="loader-pct">0%</div>
+    </div>
   </div>
 
   <!-- ═══ HERO ═══ -->

@@ -40,7 +40,6 @@
       margin-bottom: 1.8rem;
     }
 
-    /* タイトル: "before & after" 全部白 */
     .hero-title {
       font-size: clamp(4.5rem, 21vw, 15rem);
       font-weight: 900;
@@ -128,7 +127,6 @@
       margin-bottom: 0.45em;
     }
 
-    /* BEFOREラベル: 中抜き白 */
     .before-label {
       color: transparent;
       -webkit-text-stroke: 1.5px rgba(255,255,255,0.5);
@@ -138,7 +136,6 @@
       -webkit-text-stroke: 0;
     }
 
-    /* AFTERラベル: ソリッド赤 */
     .after-label {
       color: var(--red);
     }
@@ -153,7 +150,6 @@
       padding: 14vw 9% 0;
     }
 
-    /* ↓ 向きの矢印 */
     .img-chevron-wrap::before {
       content: '';
       position: absolute;
@@ -168,32 +164,27 @@
       );
     }
 
-    /* BEFORE: 外側の三角コーナーをクリーム色に、矢印をもっと長く */
     .before-wrap {
-      background: var(--after-chevron);   /* 矢印外側の三角をクリームで埋める */
-      padding-bottom: 32vw;               /* 矢印を長く伸ばす */
+      background: var(--after-chevron);
+      padding-bottom: 32vw;
     }
 
-    /* 矢印本体はダークネイビー */
     .before-wrap::before { background: var(--before-chevron); }
 
-    /* AFTER全体ブロック（ラベル〜画像）をクリーム背景に */
     .after-block {
       background: var(--after-chevron);
     }
 
-    /* after-wrap::before は親が背景を持つので不要 */
     .after-wrap::before { background: transparent; clip-path: none; }
 
     .after-wrap {
-      padding: 0 5% 6vw;   /* ラベルと画像の間に黒がでないよう上パディングなし */
+      padding: 0 5% 6vw;
     }
 
     /* ─── BEFORE IMAGE ─── */
     .before-img {
       position: relative;
       z-index: 1;
-      /* 画像を少し小さくして矢印の上下・左右が見えるようにする */
       width: 78%;
       margin: 0 auto;
       display: block;
@@ -205,7 +196,6 @@
 
     .before-img:hover { filter: brightness(0.8) saturate(0.8); }
 
-    /* ─── TRANSITION MARKER: 非表示 ─── */
     .t-marker { display: none; }
 
     .t-line {
@@ -238,26 +228,22 @@
       filter: brightness(1.05) saturate(1.1);
     }
 
-    /* 01・03: メイン画像が左 */
     .mosaic-std { grid-template-columns: 5fr 3fr; }
 
     .mosaic-std img:nth-child(1) { grid-column:1; grid-row:1/4; height:100%; }
     .mosaic-std img:nth-child(2) { grid-column:2; grid-row:1; aspect-ratio:3/4; }
     .mosaic-std img:nth-child(3) { grid-column:2; grid-row:2; aspect-ratio:3/4; }
     .mosaic-std img:nth-child(4) { grid-column:2; grid-row:3; aspect-ratio:3/4; }
-    /* 5fr列 と 3fr列 で同じ高さになるよう aspect-ratio を逆算
-       height = width*(4/ratio_num) → 5*(4/5) = 4 = 3*(4/3) = 4 で一致 */
     .mosaic-std img:nth-child(5) {
       grid-column: 1; grid-row: 4;
       aspect-ratio: 5/4;
-      object-position: bottom;   /* 上部をクロップ・下端を揃える */
+      object-position: bottom;
     }
     .mosaic-std img:nth-child(6) {
       grid-column: 2; grid-row: 4;
       aspect-ratio: 3/4;
     }
 
-    /* 02: メイン画像が右 (反転) */
     .mosaic-rev { grid-template-columns: 3fr 5fr; }
 
     .mosaic-rev img:nth-child(1) { grid-column:2; grid-row:1/4; height:100%; }
@@ -286,22 +272,19 @@
       text-align: center;
     }
 
-    /* ─── PC: 中央寄せ・縮小 ─── */
+    /* ─── PC ─── */
     @media (min-width: 768px) {
-      /* body を flex 列にして中央寄せ */
       body {
         display: flex;
         flex-direction: column;
         align-items: center;
       }
 
-      /* 全ての直接子要素を最大幅 480px に収める */
       body > * {
         width: 100%;
         max-width: 480px;
       }
 
-      /* vw ベースのサイズを PC 向けに上限設定 */
       .hero-title   { font-size: clamp(3rem,   8vw, 5.5rem); }
       .block-label  { font-size: clamp(2.5rem, 7vw, 4.5rem); }
 
@@ -309,7 +292,6 @@
       .before-wrap               { padding-bottom: clamp(55px, 13vw, 130px); }
       .after-wrap                { padding: 0 5% clamp(20px, 4vw, 40px); }
 
-      /* 背景装飾の BA 文字は PC では非表示 */
       .hero::before { display: none; }
     }
   </style>
@@ -332,24 +314,22 @@
   <!-- ════════════════ 01 ════════════════ -->
   <div class="person-sep"><div class="person-sep-line"></div></div>
 
-  <!-- BEFOREラベルだけ先に浮き上がる -->
   <div class="fade-up">
     <div class="block-label before-label">BEFORE<span class="idx">01</span></div>
   </div>
 
-  <!-- 矢印・クリームコーナー・AFTERをひとまとめで同タイミングに浮き上がる -->
   <div class="fade-up d1">
     <div class="img-chevron-wrap before-wrap">
-      <img class="before-img" src="images/before1/IMG_1873.JPG" alt="Before 1">
+      <img class="before-img" src="images/before/before1/IMG_1873.JPG" alt="Before 1">
     </div>
     <div class="after-block">
       <div class="block-label after-label">AFTER<span class="idx">01</span></div>
       <div class="img-chevron-wrap after-wrap">
         <div class="mosaic mosaic-std fade-up d2">
-          <img src="images/after1/IMG_1977.JPG" alt="">
-          <img src="images/after1/IMG_1116_Original.JPG" alt="">
-          <img src="images/after1/IMG_0031.JPG" alt="">
-          <img src="images/after1/IMG_0740.JPG" alt="">
+          <img src="images/after/after1/IMG_1977.JPG" alt="">
+          <img src="images/after/after1/IMG_1116_Original.JPG" alt="">
+          <img src="images/after/after1/IMG_0031.JPG" alt="">
+          <img src="images/after/after1/IMG_0740.JPG" alt="">
         </div>
       </div>
     </div>
@@ -364,16 +344,16 @@
 
   <div class="fade-up d1">
     <div class="img-chevron-wrap before-wrap">
-      <img class="before-img" src="images/before2/IMG_1870.JPG" alt="Before 2">
+      <img class="before-img" src="images/before/before2/IMG_1870.JPG" alt="Before 2">
     </div>
     <div class="after-block">
       <div class="block-label after-label">AFTER<span class="idx">02</span></div>
       <div class="img-chevron-wrap after-wrap">
         <div class="mosaic mosaic-rev fade-up d2">
-          <img src="images/after2/IMG_2659.JPG" alt="">
-          <img src="images/after2/IMG_2658.jpg" alt="">
-          <img src="images/after2/IMG_4085.JPG" alt="">
-          <img src="images/after2/IMG_4095.JPG" alt="">
+          <img src="images/after/after2/IMG_2659.JPG" alt="">
+          <img src="images/after/after2/IMG_2658.jpg" alt="">
+          <img src="images/after/after2/IMG_4085.JPG" alt="">
+          <img src="images/after/after2/IMG_4095.JPG" alt="">
         </div>
       </div>
     </div>
@@ -388,18 +368,18 @@
 
   <div class="fade-up d1">
     <div class="img-chevron-wrap before-wrap">
-      <img class="before-img" src="images/before3/IMG_1872.JPG" alt="Before 3">
+      <img class="before-img" src="images/before/before3/IMG_1872.JPG" alt="Before 3">
     </div>
     <div class="after-block">
       <div class="block-label after-label">AFTER<span class="idx">03</span></div>
       <div class="img-chevron-wrap after-wrap">
         <div class="mosaic mosaic-std fade-up d2">
-          <img src="images/after3/IMG_2654.JPG" alt="">
-          <img src="images/after3/IMG_2651.JPG" alt="">
-          <img src="images/after3/IMG_2653.JPG" alt="">
-          <img src="images/after3/IMG_2652.JPG" alt="">
-          <img src="images/after3/IMG_4096.JPG" alt="">
-          <img src="images/after3/IMG_1432.JPG" alt="">
+          <img src="images/after/after3/IMG_2654.JPG" alt="">
+          <img src="images/after/after3/IMG_2651.JPG" alt="">
+          <img src="images/after/after3/IMG_2653.JPG" alt="">
+          <img src="images/after/after3/IMG_2652.JPG" alt="">
+          <img src="images/after/after3/IMG_4096.JPG" alt="">
+          <img src="images/after/after3/IMG_1432.JPG" alt="">
         </div>
       </div>
     </div>
@@ -409,12 +389,10 @@
   <footer class="footer">before &amp; after</footer>
 
   <script>
-    // ヒーロー即時表示
     document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
       setTimeout(() => el.classList.add('visible'), 200 + i * 150);
     });
 
-    // スクロールアニメーション
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {

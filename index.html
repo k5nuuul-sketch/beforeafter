@@ -22,6 +22,57 @@
       overflow-x: hidden;
     }
 
+    /* ─── LOADER ─── */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #070707;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6rem;
+      transition: opacity 0.7s ease;
+    }
+
+    #loader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-title {
+      font-size: clamp(1.6rem, 8vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+
+    .loader-title .loader-amp {
+      color: rgba(255,255,255,0.25);
+    }
+
+    .loader-track {
+      width: min(240px, 60vw);
+      height: 1px;
+      background: #1c1c1c;
+      overflow: hidden;
+    }
+
+    .loader-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--red);
+      transition: width 0.25s ease;
+    }
+
+    .loader-pct {
+      font-size: 0.58rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: #333;
+    }
+
     /* ─── HERO ─── */
     .hero {
       min-height: 100vh;
@@ -293,10 +344,19 @@
       .after-wrap                { padding: 0 5% clamp(20px, 4vw, 40px); }
 
       .hero::before { display: none; }
+
+      #loader { max-width: none; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ═══ LOADER ═══ -->
+  <div id="loader">
+    <div class="loader-title">before<span class="loader-amp">&</span>after</div>
+    <div class="loader-track"><div class="loader-fill" id="loader-fill"></div></div>
+    <div class="loader-pct" id="loader-pct">0%</div>
+  </div>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero">
@@ -320,16 +380,16 @@
 
   <div class="fade-up d1">
     <div class="img-chevron-wrap before-wrap">
-      <img class="before-img" src="images/before/before1/IMG_1873.JPG" alt="Before 1">
+      <img class="before-img" src="images/before/before1/IMG_1873.JPG" alt="Before 1" decoding="async">
     </div>
     <div class="after-block">
       <div class="block-label after-label">AFTER<span class="idx">01</span></div>
       <div class="img-chevron-wrap after-wrap">
         <div class="mosaic mosaic-std fade-up d2">
-          <img src="images/after/after1/IMG_1977.JPG" alt="">
-          <img src="images/after/after1/IMG_1116_Original.JPG" alt="">
-          <img src="images/after/after1/IMG_0031.JPG" alt="">
-          <img src="images/after/after1/IMG_0740.JPG" alt="">
+          <img src="images/after/after1/IMG_1977.JPG" alt="" decoding="async">
+          <img src="images/after/after1/IMG_1116_Original.JPG" alt="" decoding="async">
+          <img src="images/after/after1/IMG_0031.JPG" alt="" decoding="async">
+          <img src="images/after/after1/IMG_0740.JPG" alt="" decoding="async">
         </div>
       </div>
     </div>
@@ -344,16 +404,16 @@
 
   <div class="fade-up d1">
     <div class="img-chevron-wrap before-wrap">
-      <img class="before-img" src="images/before/before2/IMG_1870.JPG" alt="Before 2">
+      <img class="before-img" src="images/before/before2/IMG_1870.JPG" alt="Before 2" decoding="async">
     </div>
     <div class="after-block">
       <div class="block-label after-label">AFTER<span class="idx">02</span></div>
       <div class="img-chevron-wrap after-wrap">
         <div class="mosaic mosaic-rev fade-up d2">
-          <img src="images/after/after2/IMG_2659.JPG" alt="">
-          <img src="images/after/after2/IMG_2658.jpg" alt="">
-          <img src="images/after/after2/IMG_4085.JPG" alt="">
-          <img src="images/after/after2/IMG_4095.JPG" alt="">
+          <img src="images/after/after2/IMG_2659.JPG" alt="" decoding="async">
+          <img src="images/after/after2/IMG_2658.jpg" alt="" decoding="async">
+          <img src="images/after/after2/IMG_4085.JPG" alt="" decoding="async">
+          <img src="images/after/after2/IMG_4095.JPG" alt="" decoding="async">
         </div>
       </div>
     </div>
@@ -368,18 +428,18 @@
 
   <div class="fade-up d1">
     <div class="img-chevron-wrap before-wrap">
-      <img class="before-img" src="images/before/before3/IMG_1872.JPG" alt="Before 3">
+      <img class="before-img" src="images/before/before3/IMG_1872.JPG" alt="Before 3" decoding="async">
     </div>
     <div class="after-block">
       <div class="block-label after-label">AFTER<span class="idx">03</span></div>
       <div class="img-chevron-wrap after-wrap">
         <div class="mosaic mosaic-std fade-up d2">
-          <img src="images/after/after3/IMG_2654.JPG" alt="">
-          <img src="images/after/after3/IMG_2651.JPG" alt="">
-          <img src="images/after/after3/IMG_2653.JPG" alt="">
-          <img src="images/after/after3/IMG_2652.JPG" alt="">
-          <img src="images/after/after3/IMG_4096.JPG" alt="">
-          <img src="images/after/after3/IMG_1432.JPG" alt="">
+          <img src="images/after/after3/IMG_2654.JPG" alt="" decoding="async">
+          <img src="images/after/after3/IMG_2651.JPG" alt="" decoding="async">
+          <img src="images/after/after3/IMG_2653.JPG" alt="" decoding="async">
+          <img src="images/after/after3/IMG_2652.JPG" alt="" decoding="async">
+          <img src="images/after/after3/IMG_4096.JPG" alt="" decoding="async">
+          <img src="images/after/after3/IMG_1432.JPG" alt="" decoding="async">
         </div>
       </div>
     </div>
@@ -389,22 +449,56 @@
   <footer class="footer">before &amp; after</footer>
 
   <script>
-    document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
-      setTimeout(() => el.classList.add('visible'), 200 + i * 150);
+    const loaderEl   = document.getElementById('loader');
+    const fillEl     = document.getElementById('loader-fill');
+    const pctEl      = document.getElementById('loader-pct');
+    const imgs       = Array.from(document.querySelectorAll('img'));
+    const total      = imgs.length;
+    let   done       = 0;
+
+    function tick() {
+      done++;
+      const pct = Math.round((done / total) * 100);
+      fillEl.style.width = pct + '%';
+      pctEl.textContent  = pct + '%';
+      if (done >= total) dismiss();
+    }
+
+    function dismiss() {
+      setTimeout(() => {
+        loaderEl.classList.add('hide');
+        loaderEl.addEventListener('transitionend', () => loaderEl.remove(), { once: true });
+        startPage();
+      }, 300);
+    }
+
+    imgs.forEach(img => {
+      if (img.complete) {
+        tick();
+      } else {
+        img.addEventListener('load',  tick, { once: true });
+        img.addEventListener('error', tick, { once: true });
+      }
     });
 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
+    function startPage() {
+      document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 200 + i * 150);
       });
-    }, { threshold: 0.07 });
 
-    document.querySelectorAll('.fade-up').forEach(el => {
-      if (!el.closest('.hero')) io.observe(el);
-    });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.07 });
+
+      document.querySelectorAll('.fade-up').forEach(el => {
+        if (!el.closest('.hero')) io.observe(el);
+      });
+    }
   </script>
 
 </body>
